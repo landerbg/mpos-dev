@@ -1,0 +1,96 @@
+
+
+
+<div class="container" ng-controller="measuresCtrl as msctrl">
+    <div class="block-header">
+    <h2>Мерни единици</h2>
+        <ul class="actions">
+            <li ng-click="msctrl.isNavCollapsed = !msctrl.isNavCollapsed">
+                <a href="">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="">Refresh</a>
+                    </li>
+                    <li>
+                        <a href="">Manage Widgets</a>
+                    </li>
+                    <li>
+                        <a href="">Widgets Settings</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+</div>
+
+
+
+    <div class="card" ng-show="msctrl.isNavCollapsed">
+        <div class="card-header">
+            <h2>Мерни единици <small>Създайте нова мерна единица.Ако мерната единица не е борима отбележете с отметка.</small></h2>
+        </div>
+
+
+        <div class="card-body card-padding">
+            <form class="row" role="form">
+                <div class="col-sm-6">
+                    <div class="form-group fg-line">
+                        <label class="sr-only" for="measure">Име</label>
+                        <input type="text" class="form-control input-sm" ng-model="msctrl.measure.name" id="measure" placeholder="Мерна единица">
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-2">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">
+                            <i class="input-helper"></i>
+                            Теглима
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-sm m-t-5" ng-click="msctrl.save_measure()">Запис</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <div class="card">
+        <div class="card-header">
+
+
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table  class="table table-striped" >
+                    <tr ng-repeat="w in msctrl.measures">
+
+                        <td>
+                            {{ w.name }}
+                        </td>
+                        <td data-title=""><button class="btn btn-default waves-effect" ng-click="msctrl.edit_measure(w)"><i class="zmdi zmdi-check"></i></button>
+                       <button class="btn btn-danger waves-effect" ng-click="msctrl.remove_measure(w)"><i class="zmdi zmdi-close"></i></button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-float btn-danger m-btn" ng-click="msctrl.isNavCollapsed=true"><i class="zmdi zmdi-plus" ></i></button>
+</div>

@@ -1,0 +1,79 @@
+<div class="container" ng-controller="productsCtrl as pctrl">
+    <div class="block-header">
+        <h2>Продукти</h2>
+
+        <ul class="actions">
+            <li>
+                <a href="">
+                    <i class="zmdi zmdi-trending-up"></i>
+                </a>
+            </li>
+            <li>
+                <a href="" ng-click="pctrl.search=!pctrl.search">
+                    <i class="zmdi zmdi-search" ></i>
+                </a>
+            </li>
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="">Refresh</a>
+                    </li>
+                    <li>
+                        <a href="">Manage Widgets</a>
+                    </li>
+                    <li>
+                        <a href="">Widgets Settings</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+
+
+
+    <div class="card">
+        <div class="card-header">
+
+
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="pctrl.tableFilter" class="table table-striped table-vmiddle" show-filter="pctrl.search">
+                    <tr ng-repeat="w in $data">
+                        <td data-title="'Номер'" filter="{ 'number': 'text' }">
+                            {{ w.number }}
+                        </td>
+                        <td data-title="'Име'" filter="{ 'name': 'text' }">
+                            {{ w.name }}
+                        </td>
+                        <td data-title="'Пр.цена'">
+                            {{ w.price | currency : "" : 2}}
+                        </td>
+                        <td data-title="'Дост.цена'">
+                            {{ w.lastdev_price | currency : "" : 2 }}
+                        </td>
+                        <td data-title="'Наличност'">
+                            {{ w.qty | number : 3 }}
+                        </td>
+                        <td data-title="'Доставчик'" filter="{ 'partner': 'text' }">
+                            {{ w.partner }}
+                        </td>
+
+                        <td data-title=""><button class="btn btn-default waves-effect" ng-click="pctrl.edit_product(w)"><i class="zmdi zmdi-check"></i></button>
+                        <button class="btn btn-danger waves-effect" ng-click="pctrl.remove_product(w)"><i class="zmdi zmdi-close"></i></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-float btn-danger m-btn" ng-click="pctrl.add_product()"><i class="zmdi zmdi-plus" ></i></button>
+    </div>

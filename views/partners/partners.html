@@ -1,0 +1,127 @@
+<div class="container" ng-controller="partnersCtrl as pactrl">
+    <div class="block-header">
+        <h2>Партньори</h2>
+
+        <ul class="actions">
+            <li ng-click="pactrl.isNavCollapsed = !pactrl.isNavCollapsed">
+                <a href="">
+                    <i class="zmdi zmdi-plus"></i>
+                </a>
+            </li>
+            <li>
+                <a href="" ng-click="pactrl.search=!pactrl.search">
+                    <i class="zmdi zmdi-search" ></i>
+                </a>
+            </li>
+            <li class="dropdown" uib-dropdown>
+                <a href="" uib-dropdown-toggle>
+                    <i class="zmdi zmdi-more-vert"></i>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a href="">Refresh</a>
+                    </li>
+                    <li>
+                        <a href="">Manage Widgets</a>
+                    </li>
+                    <li>
+                        <a href="">Widgets Settings</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="card" ng-show="pactrl.isNavCollapsed">
+        <div class="card-header">
+            <h2><small>Създайте нов партньор</small></h2>
+        </div>
+
+
+
+            <div class="card-body card-padding">
+                <form role="form" name="partnerForm" data-ng-submit="partnerForm.$valid && pactrl.save_partner()" novalidate>
+
+                    <div class="form-group fg-line" ng-class="{'has-error' : partnerForm.partnerNumber.$error.required}">
+                        <label for="InputPart1">Номер на партньора</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.number" id="InputPart1" required
+                               autocomplete="off" name="partnerNumber">
+                        <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                              ng-show="partnerForm.partnerNumber.$error.required"></span>
+                    </div>
+                    <div class="form-group fg-line" ng-class="{'has-error' : partnerForm.partnerName.$error.required}">
+                        <label for="InputPart1">Име на партньора</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.name" id="InputPart2"  required
+                               autocomplete="off" name="partnerName">
+                        <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                              ng-show="partnerForm.partnerName.$error.required"></span>
+                    </div>
+                    <div class="form-group fg-line">
+                        <label for="InputPart1">Булстат на партньора</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.eik" id="InputPart6"
+                               autocomplete="off" name="partnerEik">
+                        <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                              ng-show="partnerForm.partnerEik.$error.pattern"></span>
+                    </div>
+                    <div class="form-group fg-line">
+                        <label for="InputPart3">ДДС Номер</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.vatnumber" id="InputPart3"
+                               autocomplete="off">
+                    </div>
+                    <div class="form-group fg-line">
+                        <label for="InputPart1">Адрес на партньора</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.address" id="InputPart4"
+                               autocomplete="off">
+                    </div>
+                    <div class="form-group fg-line">
+                        <label for="InputPart1">МОЛ на партньора</label>
+                        <input type="text" class="form-control input-sm" ng-model="pactrl.partner.mol" id="InputPart5"
+                               autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm m-t-5"  ng-disabled="!partnerForm.$valid">Запис</button>
+                </form>
+            </div>
+
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-header">
+
+
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table ng-table="pactrl.tableFilter" class="table table-striped table-vmiddle" show-filter="pactrl.search">
+                    <tr ng-repeat="w in $data">
+                        <td data-title="'Номер'" filter="{ 'number': 'text' }">
+                            {{ w.number }}
+                        </td>
+                        <td data-title="'Име'" filter="{ 'name': 'text' }">
+                            {{ w.name }}
+                        </td>
+                        <td data-title="'Еик'" filter="{ 'eik': 'text' }">
+                            {{ w.eik}}
+                        </td>
+                        <td data-title="'Адрес'" filter="{ 'address ': 'text' }">
+                            {{ w.address }}
+                        </td>
+                        <td data-title="'МОЛ'" filter="{ 'partner': 'text' }">
+                            {{ w.mol }}
+                        </td>
+                        <td data-title=""><button class="btn btn-default waves-effect" ng-click="pactrl.edit_partner(w)"><i class="zmdi zmdi-check"></i></button></td>
+                        <td data-title=""><button class="btn btn-danger waves-effect" ng-click="pactrl.remove_partner(w)"><i class="zmdi zmdi-close"></i></button></td>
+
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-float btn-danger m-btn" ng-click="pactrl.isNavCollapsed=true"><i class="zmdi zmdi-plus" ></i></button>
+</div>

@@ -1,0 +1,163 @@
+
+
+<div class="container-fluid p-t-10" ng-controller="posCtrl as posctrl" ng-keydown="posctrl.shortcuts($event);"  >
+
+<div class="container-fluid">
+    <div class="col-xs-12">
+        <div class="row" >
+            <div class="col-xs-2">
+                <div class="card text-center"  style="background-color: black; font-size: 30px; height:6vh; color: #CDDC39" >
+
+<p >{{posctrl.getTotal() | number : 2}}</p>
+
+
+
+
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="card" style="height:6vh">
+
+
+
+                    <form data-ng-submit="posctrl.orderPlus(posctrl.barcode)" role="form">
+                        <input type="text" id="pos-search" placeholder="" class="lvhs-input" ng-model="posctrl.barcode"
+                               autocomplete='off' />
+
+
+
+                    </form>
+                </div>
+
+
+    </div>
+            <div class="col-xs-7 ">
+
+                <span  class="btn-pos-nav waves-effect col-xs-1 "  ng-click="posctrl.prevGroupPage()" style="height:6vh;">
+                <i class="zmdi zmdi-arrow-left zmdi-hc-3x"></i> </span>
+                </span>
+
+                    <span  ng-repeat="groups in posctrl.groups | limitTo : 5 : posctrl.group_page">
+                        <span class="group-pos card  waves-effect col-xs-2" ng-click="posctrl.showed_group  = groups.name;" style="height:6vh;">
+
+                            <div class="card-block">
+                                <p class="card-text f-12" style="text-align: center;">{{groups.name}}</p>
+                            </div>
+
+                        </span>
+                    </span>
+                    <span   ng-if="posctrl.group_page + 5 < posctrl.groups.length" class="btn-pos-nav   waves-effect col-xs-1 " style="height:6vh;" ng-click="posctrl.nextGroupPage()">
+                       <i class="zmdi zmdi-arrow-right zmdi-hc-3x"></i> </span>
+
+
+
+
+
+            </div>
+</div>
+        <div class="row">
+            <div class="col-xs-5">
+        <div class="card table-responsive f-10"  id="pos-table" style="height:58vh;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-xs-6">Артикул</th>
+                    <th class="col-xs-1"></th>
+                    <th class="col-xs-1">Цена</th>
+                    <th class="col-xs-1">Сума</th>
+                    <th class="col-xs-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                        ng-repeat="item in posctrl.current_order track by $index"
+                        my-repeat-directive
+                        ng-click="posctrl.activateRow($index)"
+                        ng-class="{'bgm-amber' : posctrl.selected === $index, 'lastpos-row' : $last}" >
+
+
+
+
+                    <td >{{item.name}}</td>
+                    <td ><button class="btn btn-sm btn-danger waves-effect"
+                                             ng-if="posctrl.selected === $index"
+                                             ng-click="posctrl.removeAmount($index)">
+                        <i class="zmdi zmdi-minus"></i></button> {{item.ammount}}  <button class="btn btn-success btn-sm waves-effect" ng-if="posctrl.selected === $index" ng-click="posctrl.addAmount($index)"><i class="zmdi zmdi-plus"></i></button></td>
+                    <td >{{item.price | currency}}</td>
+                    <td >{{item.ammount*item.price | currency}}</td>
+                    <td ><button class="btn btn-danger waves-effect"
+                                 ng-if="posctrl.selected === $index"
+                                 ng-click="posctrl.removeRow($index)">
+                        <i class="zmdi zmdi-delete"></i></button></td>
+                </tr>
+
+
+                </tbody>
+
+            </table>
+            <div id="pos-bottom"></div>
+        </div>
+            </div>
+            <div class="col-xs-7" style="height:78vh;">
+
+
+                    <span ng-repeat="art in posctrl.products | filter: {group :{ name: posctrl.showed_group}} | orderBy : 'name' ">
+
+                        <span class="btn-pos card  waves-effect" ng-click="posctrl.touch_button(art, 1)" style=" width:19.2%; height:19.4%;">
+                            <div class="card-block">
+                            <p class="card-title f-10">Нал: {{art.qty}} / Цена: {{art.price}}</p>
+
+                            </div>
+                            <div class="card-block">
+                            <p class="card-text f-12" style="text-align: center;">{{art.name}}</p>
+                            </div>
+                        </span>
+                    </span>
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+                <div class="card">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="..."  style="height:8vh">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default btn-lg waves-effect" ng-click="posctrl.finishOrder()"><i class="zmdi zmdi-money" ></i> Тотал</button>
+
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default btn-lg waves-effect" ng-click="posctrl.clearOrder()"><i class="zmdi zmdi-close" ></i> Отказ</button>
+
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-default btn-lg waves-effect" ng-click="posctrl.finishOrderFisc()"><i class="zmdi zmdi-print" ></i> Бон</button>
+
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default btn-lg waves-effect"  ><i class="zmdi tm-icon" ng-class="{'zmdi-cloud-upload' : $root.online > 0}" style="font-size:16px"><i class="tmn-counts">{{$root.online > 1 ? $root.online:"";}}</i></i></button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button  type="button" class="btn btn-default btn-lg waves-effect" ng-click="posctrl.showPending();"><i class="zmdi zmdi-portable-wifi-off"></i></button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button"  class="btn btn-default btn-lg waves-effect"><i class="zmdi zmdi-account"></i></button>
+                        </div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+</div>
+</div>
+    </div>

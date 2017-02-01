@@ -1,0 +1,114 @@
+<div class="container" ng-controller="salesReportController">
+    <div class="block-header">
+        <h2>Продажби</h2>
+
+        <ul class="actions">
+            <li>
+
+
+            </li>
+        </ul>
+
+    </div>
+
+
+    <div class="card">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="date-picker input-group" ng-class="{ 'is-opened': opened4 == true }">
+                    <span class="input-group-addon"><i class="zmdi zmdi-calendar ma-icon"></i></span>
+                    <div class="fg-line" ng-class="{ 'fg-toggled': opened4 == true }">
+                        <input ng-click="open($event, 'opened4')" type="text" class="form-control" uib-datepicker-popup="{{format}}" show-weeks="false" ng-model="dtFrom" is-open="opened4"  datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="От" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="date-picker input-group" ng-class="{ 'is-opened': opened5 == true }">
+                    <span class="input-group-addon"><i class="zmdi zmdi-calendar ma-icon"></i></span>
+                    <div class="fg-line" ng-class="{ 'fg-toggled': opened5 == true }">
+                        <input ng-click="open($event, 'opened5')" type="text" class="form-control" uib-datepicker-popup="{{format}}" show-weeks="false" ng-model="dtTo" is-open="opened5"  datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="До" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-default btn-info waves-effect  m-t-5" ng-click="getSales(dtFrom, dtTo)"><i class="zmdi zmdi-search "></i></button>
+
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-default btn-info waves-effect  m-t-5" ng-click="prevSales()" ng-hide="!availablePrev"><i class="zmdi zmdi-arrow-left "></i></button>
+
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-default btn-info waves-effect  m-t-5" ng-click="nextSales()" ng-hide="!availableNext"><i class="zmdi zmdi-arrow-right "></i></button>
+
+            </div>
+
+
+
+
+        </div>
+        <div class="card-header">
+
+        </div>
+        <script type="text/ng-template" id="showSale.html">
+            <div class="modal-header">
+                <h4 class="modal-title">Продажба</h4>
+            </div>
+            <div class="modal-body">
+                <div class="card-body table-responsive" >
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Арт.</th>
+                            <th>К-во</th>
+                            <th>Цена</th>
+                            <th>Сума</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="row in modalContent">
+                            <td>{{row.number}}</td>
+                            <td>{{row.name}}</td>
+                            <td>{{row.ammount}}</td>
+                            <td>{{row.price | currency : "" : 2}} лв.</td>
+                            <td>{{row.ammount*row.price | currency : "" : 2}} лв.</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-link" ng-click="ok()">OK</button>
+
+            </div>
+        </script>
+        <div class="card-body table-responsive" >
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Партньор</th>
+                    <th>Сума</th>
+                    <th>Док.номер</th>
+                    <th>Дата</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="sale in sales">
+                    <td>{{$index+1}}</td>
+                    <td>{{sale.id}}</td>
+                    <td>{{sale.total | currency : "" : 2}} лв.</td>
+                    <td>{{sale.date | date:'dd/MM/yyyy  h:mma'}}</td>
+                    <td><button class="btn btn-info btn-icon waves-effect waves-circle" ng-click="loadSale(sale.id)"><i class="zmdi zmdi-search"></i></button></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

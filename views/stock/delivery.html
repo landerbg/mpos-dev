@@ -1,0 +1,197 @@
+<div class="container" ng-controller="deliveryCtrl as dctrl" ng-keydown="dctrl.shortcuts($event)">
+
+
+
+    <div class="container" style="position:absolute; z-index:2">
+    <div class="card">
+        <div class="listview lv-bordered lv-lg">
+            <div class="lv-header-alt clearfix">
+                <div >
+                    <input id="delivery-search" type="text" placeholder="Търсене по име..." class="lvhs-input"  ng-model="dctrl.search_part" >
+
+                </div>
+                <ul class="lv-attrs">
+                    <li>Сума : {{dctrl.getTotalDeliveryPrice() | number:4}}</li>
+                    <li>Сума пр.: {{dctrl.getTotalSalesPrice() | number :2}}</li>
+                    <li>Партньор : {{}}</li>
+                </ul>
+                <ul class="lv-actions actions">
+                    <li>
+                        <button class="btn btn-default btn-icon-text waves-effect" ng-click="dctrl.printDelivery()"><i class="zmdi zmdi-print"></i> Печат</button>
+                    </li>
+                    <li  >
+                            <button class="btn btn-default btn-icon-text waves-effect" ng-click="dctrl.clearTempDelivery()"><i class="zmdi zmdi-delete"></i> Отказ</button>
+                    </li>
+                    <li  >
+                        <button class="btn btn-default btn-icon-text waves-effect" ng-click="dctrl.saveDelivery()"><i class="zmdi zmdi-floppy"></i> Запис</button>
+                    </li>
+                    <li class="dropdown" uib-dropdown>
+                        <a href="" uib-dropdown-toggle aria-expanded="true">
+                            <i class="zmdi zmdi-sort"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Last Modified</a>
+                            </li>
+                            <li>
+                                <a href="">Last Edited</a>
+                            </li>
+                            <li>
+                                <a href="">Name</a>
+                            </li>
+                            <li>
+                                <a href="">Date</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown" uib-dropdown>
+                        <a href="" uib-dropdown-toggle aria-expanded="true">
+                            <i class="zmdi zmdi-more-vert"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Refresh</a>
+                            </li>
+                            <li>
+                                <a href="">Listview Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="lv-body "  ng-if="dctrl.search_part.length">
+                <div class="lv-item media "
+                     ng-repeat="art in dctrl.part_products | filter:{name:dctrl.search_part} | limitTo:dctrl.result_limit as filtered track by $index"
+                     ng-click="dctrl.addLine(art)"
+                     ng-class="{'bgm-lightgreen': dctrl.mark_row(art, $index, filtered.length)}"
+                     >
+
+
+                    <div class="media-body">
+                        <div class="lv-title" ng-click="dctrl.addLine(art)">{{art.name}} - {{art.lastdev_price | number:2}} лв.</div>
+
+                        <div class="lv-actions actions dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Редактирай</a>
+                                </li>
+                                <li>
+                                    <a href="">Изтрий</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+    <div class="container m-t-5" style="position:absolute; z-index:1">
+    <div class="card" style="margin-top:120px;">
+        <div class="listview lv-bordered lv-lg">
+            <div class="lv-header-alt clearfix">
+
+
+
+
+
+            </div>
+
+            <div class="lv-body ">
+                <div class="lv-item media " ng-repeat="line in dctrl.temp_delivery |orderBy:'-'  track by $index">
+                    <div class="checkbox pull-left">
+                        <label>
+                            <input type="checkbox" value="" ng-model="line.is_ready">
+                            <i class="input-helper"></i>
+                        </label>
+                    </div>
+                    <div class="media-body" >
+                        <div class="lv-title">{{line.name}}</div>
+
+                        <div class="lv-actions actions dropdown" uib-dropdown>
+                            <a href="" uib-dropdown-toggle aria-expanded="true">
+                                <i class="zmdi zmdi-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="">Още инфо</a>
+                                </li>
+                                <li>
+                                    <a href="">Изтрий</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="lv-attrs" ng-if="!line.quantity || !line.lastdev_price || !line.is_ready">
+                        <form class="row" role="form" tabindex="-1">
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line">
+                                    <label class="sr-only" for="line-{{$index}}">Количество</label>
+                                    <input type="text"  class="form-control input-sm"  id="line-{{$index}}"
+                                            ng-model="line.quantity"  placeholder="Доставено количество" autocomplete="off" tabindex="0">
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group fg-line">
+                                    <label class="sr-only" for="deliveryPrice-{{$index}}">Ед.цена</label>
+                                    <input type="text" class="form-control input-sm" id="deliveryPrice-{{$index}}"
+                                           ng-model="line.lastdev_price"  placeholder="Доставна цена с ДДС" autocomplete="off" tabindex="0" >
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-primary btn-sm m-t-5" ng-click="dctrl.submit_line();line.is_ready = true;dctrl.temp_delivery.$save(line);">Запис</button>
+                            </div>
+                        </form>
+                        </ul>
+                    <ul class="lv-attrs">
+                        <li>Количество : {{line.quantity | number:4}}</li>
+                        <li>Дост.цена: {{line.lastdev_price | number:2}} лв.</li>
+                        <li>Сума : {{(line.quantity)*line.lastdev_price | number:2}} лв.</li>
+                        <li>Наличност : {{line.qty | number:4}}</li>
+                        <li>Пр.цена : {{line.price | number:2}} лв.</li>
+
+
+
+                    </ul>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+

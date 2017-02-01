@@ -1,0 +1,38 @@
+body
+{
+    font-family: Verdana, Geneva, sans-serif !important ;
+
+}
+
+.lastpos-row
+{
+    font-size: larger;
+    border-top: solid 2px;
+    background: #8BC34A;
+
+
+}
+
+.btn-pos {
+
+
+    background-color: #3F51B5;
+    color: white;
+    padding:0 !important;
+
+    margin:0 !important;
+}
+.btn-pos-nav
+{
+    background-color: #E91E63;
+    color: white;
+}
+
+.group-pos
+{
+    background-color: #2196F3;
+    color: white;
+    outline: 1px solid orange;
+}
+
+

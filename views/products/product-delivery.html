@@ -1,0 +1,48 @@
+<div class="pmbb-header">
+    <h2><i class="zmdi zmdi-equalizer m-r-5"></i>Допълнителни:</h2>
+
+    </br>
+</div>
+
+<div class="pmbb-body p-l-30">
+
+    <form data-ng-submit="productExtra.$valid && pctrl.submitExtraProduct('Записахте успешно!')" role="form" novalidate
+          name="productExtra">
+        <dl class="dl-horizontal">
+            <dt>Последен доставчик:</dt>
+            <dd>
+                <div class="fg-inline row">
+                    <div class="col-sm-9">
+                        <input data-ng-model="pctrl.selected.partner" type="text" class="form-control"
+                               value="{{ pctrl.selected.extra.partner}}" placeholder="Последен доставчик">
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-sm bgm-teal waves-effect" type="button" ng-click=""><i class="zmdi zmdi-plus"
+                                ></i>
+                        </button>
+                    </div>
+                </div>
+            </dd>
+
+
+
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Описание:</dt>
+            <dd>
+                <div class="fg-line">
+                    <textarea class="form_control" data-ng-model="pctrl.selected.extra.description" rows="4"
+                              cols="40"></textarea>
+
+                </div>
+            </dd>
+        </dl>
+
+        <button class="btn btn-primary btn-sm" type="submit" ng-disabled="!productExtraForm.$valid">Запис</button>
+        <button class="btn btn-danger btn-sm" type="button" ng-click="pctrl.returnBackExtra()">Отказ</button>
+
+
+    </form>
+    <br/>
+    </div>

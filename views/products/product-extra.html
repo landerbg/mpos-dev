@@ -1,0 +1,35 @@
+<div class="pmbb-header">
+    <h2><i class="zmdi zmdi-equalizer m-r-5"></i>Основни</h2>
+
+    </br>
+</div>
+
+<div class="pmbb-body p-l-30">
+
+<form data-ng-submit="pctrl.addBarcode()" role="form">
+
+    <input   id="barcode-input" type="text"  ng-disabled ="!pctrl.selected.$id" ng-model="pctrl.added_barcode" type="form-control" autocomplete='off'/>
+    <button ng-if="pctrl.selected.$id" class="btn bgm-teal waves-effect" type="submit" class="form-control"><i class="zmdi zmdi-check"
+            ></i></button>
+  <p ng-if="!pctrl.selected.$id">Запишете артикула за да може да добавите баркодове!</p>
+    </form>
+    <div class="card-body table-responsive">
+        <table class="table">
+            <thead>
+            <tr >
+                <th>Баркодове</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, value) in pctrl.filterBarcodes(pctrl.selected.$id)">
+                <td>{{key}}</td>
+
+                <td><button ng-click="pctrl.delBarcode(key)">x</button></td>
+
+            </tr>
+
+            </tbody>
+        </table>
+        <button class="btn btn-float btn-danger m-btn"><i class="zmdi zmdi-plus" ng-click="add_product()"></i></button>
+    </div>
+    </div>

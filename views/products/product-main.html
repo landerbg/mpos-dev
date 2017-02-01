@@ -1,0 +1,201 @@
+<div class="pmbb-header">
+    <h2><i class="zmdi zmdi-equalizer m-r-5"></i>Основни</h2>
+
+    </br>
+</div>
+
+<div class="pmbb-body p-l-30">
+
+    <form data-ng-submit="productForm.$valid && pctrl.submit('Записахте успешно!')" role="form" novalidate
+          name="productForm">
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <dl class="dl-padding">
+                    <dt> Арт.номер</dt>
+                    <dd>
+                        <div class="fg-line row" ng-class="{'has-error' : productForm.productNumber.$error.required}">
+
+                            <div class="col-sm-6">
+                                <input data-ng-model="pctrl.selected.number" type="number" name="productNumber"
+                                       class="form-control" required placeholder="Номер">
+                                <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                                      ng-show="productForm.productNumber.$error.required"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn bgm-teal btn-sm waves-effect" type="button" ng-click="pctrl.selected.number = pctrl.getFirstNumber(pctrl.selected.number || 0)"><i class="zmdi zmdi-refresh"
+                                        ></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-sm-7">
+                <dl>
+                    <dt>Име</dt>
+                    <dd>
+                        <div class="fg-line" ng-class="{'has-error' : productForm.productName.$error.required}">
+                            <input data-ng-model="pctrl.selected.name" type="text" name="productName"
+                                   class="form-control" value="{{ pctrl.selected.name }}" required
+                                   placeholder="Име на артикула">
+                            <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                                  ng-show="productForm.productName.$error.required"></span>
+
+                        </div>
+
+                    </dd>
+                </dl>
+            </div>
+
+    </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <dl>
+                    <dt>Посл.доставна:</dt>
+                    <dd>
+                        <div class="fg-line" ng-class="{'has-error' : productForm.lastdevPrice.$error.pattern }">
+                            <input data-ng-model="pctrl.selected.lastdev_price"
+                                   ng-pattern="/^[0-9]{1,7}(\.[0-9]+)?$/" type="text" class="form-control" name="lastdevPrice"
+                                   value="{{ pctrl.selected.lastdev_price}}"
+                                   placeholder="Последна доставна" autocomplete="off">
+                            <span ng-if="productForm.lastdevPrice.$error.pattern">Невалидна цена!</span>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-sm-4">
+                <dl>
+                    <dt>Надц. %</dt>
+                    <dd>
+                        <div class="fg-line"
+                             ng-class="{'has-error' : productForm.productPrice.$error.pattern }">
+                            <input ng-pattern="/^[0-9]{1,7}(\.[0-9]+)?$/"
+                                   type="number"  class="form-control"
+                                   required placeholder="Надц. %" autocomplete="off">
+
+                        </div>
+
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-sm-4">
+                <dl>
+                    <dt>Пр.цена:</dt>
+                    <dd>
+                        <div class="fg-line"
+                             ng-class="{'has-error' : productForm.productPrice.$error.required || productForm.productPrice.$error.pattern }">
+                            <input data-ng-model="pctrl.selected.price " ng-pattern="/^[0-9]{1,7}(\.[0-9]+)?$/"
+                                   type="text" name="productPrice" ng-required="true" class="form-control"
+                                   required placeholder="Продажна цена" autocomplete="off">
+                            <span class="zmdi zmdi-alert-triangle form-control-feedback "
+                                  ng-show="productForm.productPrice.$error.required"></span>
+                            <span ng-if="productForm.productPrice.$error.pattern">Невалидна цена!</span>
+                        </div>
+
+                    </dd>
+                </dl>
+            </div>
+
+
+
+        </div>
+
+
+
+<div class="row">
+        <div class="col-sm-3">
+                <dl>
+               <dt>Валута: </dt>
+                <dd>
+                    <div class="fg-line row">
+                        <div class="col-sm-9">
+                        <div class="select">
+                            <select class="form-control"
+                                    ng-model="pctrl.selected.currency"
+                                    ng-options="option.name for option in pctrl.currency track by option.name"
+                                    >
+                                <option value="tralalal">TRALALAL</option>
+                            </select>
+
+                        </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-xs bgm-teal waves-effect" type="button" ng-click=""><i class="zmdi zmdi-plus"
+                                    ></i>
+                            </button>
+                        </div>
+                        </div>
+                    </dd>
+                </dl>
+
+            </div>
+
+        <div class="col-sm-3">
+                <dl>
+                <dt>Мерна ед.</dt>
+                    <dd>
+                    <div class="fg-line row">
+                        <div class="col-sm-9">
+                        <div class="select">
+
+                            <select class="form-control"
+                                    ng-model="pctrl.selected.measures"
+                                    ng-options="option.name for option in pctrl.measures track by option.name"
+                                    >
+                                <option value="tralalal">TRALALAL</option>
+                            </select>
+</div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-xs bgm-teal waves-effect" type="button" ng-click=""><i class="zmdi zmdi-plus"
+                                    ></i>
+                            </button>
+                        </div>
+                    </div>
+                </dd>
+
+            </dl>
+        </div>
+        <div class="col-sm-6">
+            <dl>
+                <dt>Стокова група:</dt>
+                <dd>
+                    <div class="fg-line row">
+                        <div class="col-sm-9">
+                            <div class="select">
+                                <select class="form-control"
+
+                                        ng-model="pctrl.selected.group"
+                                        ng-options="option.name for option in pctrl.groups track by option.name"
+                                        >
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-xs bgm-teal waves-effect" type="button" ng-click=""><i class="zmdi zmdi-plus"
+                                    ></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </dd>
+</dl>
+
+        </div>
+</div>
+
+        <button class="btn btn-primary btn-sm waves-effect pull-left" type="submit"  ng-disabled="!productForm.$valid">Запис</button>
+        <button class="btn btn-danger btn-sm waves-effect pull-left" type="button"  ng-click="pctrl.returnBack()">Отказ</button>
+    </form>
+    </div>
+    <br/>
+
+
+
